@@ -14,17 +14,9 @@ export class MessagesRepository {
   async findOne(id: string) {
     const data: string = await readFile('data.json', 'utf8');
     const parsedData: unknown = JSON.parse(data);
+    const dataObject = parsedData as Data;
 
-    if (
-      typeof parsedData === 'object' &&
-      parsedData !== null &&
-      !Array.isArray(parsedData)
-    ) {
-      const dataObject = parsedData as Data;
-      return dataObject[id];
-    }
-
-    throw new Error('Invalid data format');
+    return dataObject[id];
   }
 
   async findAll() {
